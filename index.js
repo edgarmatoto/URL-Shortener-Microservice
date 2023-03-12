@@ -57,7 +57,7 @@ app.post('/api/shorturl', (req, res) => {
     }
 
     res.json({
-      original_url : host,
+      original_url : url,
       short_url : hostList.indexOf(host)
     });
 
