@@ -26,7 +26,7 @@ app.get('/api/hello', function(req, res) {
 });
 
 
-const hostList = [];
+const urls = [];
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
 
@@ -52,17 +52,25 @@ app.post('/api/shorturl', (req, res) => {
       });
     }
 
-    if (!hostList.includes(host)) {
-      hostList.push(host);
+    if (!urls.includes(url)) {
+      urls.push(url);
     }
 
     res.json({
       original_url : url,
-      short_url : hostList.indexOf(host)
+      short_url : urls.indexOf(url)
     });
 
   });
 
+});
+
+
+// Redirect the short URL to Original URL
+app.get('/api/shorturl/:id', (req,res) => {
+  const { id } = req.params;
+  const originalUrl = urls[Number(id)];
+  res.redirect(originalUrl);
 });
 
 app.listen(port, function() {
